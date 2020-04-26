@@ -3,6 +3,8 @@ var choiceList = document.querySelector("#choice-list");
 var nextQuestion = document.querySelector("#next-question");
 var startQuiz = document.querySelector("#start");
 var timeEl = document.querySelector(".timer");
+var quizCard = document.querySelector(".quiz");
+var instr = document.querySelector("h1");
 
 var secondsLeft = 300;
 var timerInterval;
@@ -16,7 +18,7 @@ function updateTimer() {
 
     if (secondsLeft === 0) {
         clearInterval(timerInterval);
-        setTimeout(sendMessage, 1000);
+        //setTimeout(sendMessage, 1000);
     }
 }
 
@@ -25,55 +27,36 @@ function updateTimer() {
 var questionArray = [
 
     {
-        question: "jlijlk",
-        choice: ["a", "b", "c", "d"],
-        answer: "c"
+        question: "What is a variable in JavaScript?",
+        choice: ["function analysis", "arrayList", "stored data that may vary", "numerator"],
+        answer: "stored data that may vary"
     },
     {
-        question: "whats up",
-        choice: ["a", "b", "c", "d"],
-        answer: "b"
+        question: "What does the = do in this example: var catTail = 0;",
+        choice: ["sets catTail equal to 0", "assigns a starting value of 0 to catTail", "removes the cat's tail", "creates an object"],
+        answer: "assigns a starting value of 0 to catTail"
     },
     {
-        question: "yo yo",
-        choice: ["a", "b", "c", "d"],
-        answer: "c"
+        question: "Which is an example of camel case?",
+        choice: ["camel-case", "CAMELcase", "camelCase", "cameLCase"],
+        answer: "camelCase"
     },
     {
-        question: "butter",
-        choice: ["a", "b", "c", "d"],
-        answer: "a"
+        question: "Which operator adds one to the current number?",
+        choice: ["++", "-+", "+++", "^1"],
+        answer: "++"
     },
     {
-        question: "jmilkk",
-        choice: ["a", "b", "c", "d"],
-        answer: "a"
+        question: "Can you call an anonymous function again later in your code?",
+        choice: ["No", "Yes", "if the matrix allows it", "only if it is an object"],
+        answer: "No"
     },
     {
-        question: "jlpoplk",
-        choice: ["a", "b", "c", "d"],
-        answer: "d"
+        question: "Where should you create a variable so it has global scope?",
+        choice: ["create an object called global variables", "on the index.html page", "inside a variable function", "at the top, outside of any functions or objects"],
+        answer: "at the top, outside of any functions or objects"
     },
-    {
-        question: "jbangk",
-        choice: ["a", "b", "c", "d"],
-        answer: "b"
-    },
-    {
-        question: "jcordk",
-        choice: ["a", "b", "c", "d"],
-        answer: "c"
-    },
-    {
-        question: "jyoyoyoyolk",
-        choice: ["a", "b", "c", "d"],
-        answer: "c"
-    },
-    {
-        question: "okiedokielk",
-        choice: ["a", "b", "c", "d"],
-        answer: "c"
-    }
+
 
 ];
 // var questionOne = questionArray[0].question;
@@ -102,14 +85,21 @@ function renderQuestions() {
 renderQuestions();
 
 startQuiz.addEventListener("click", function () {
-   
+    //timer starts
+
     setTimer();
+    //show quiz
+    quizCard.style.visibility = "visible"; //makes quiz visible when start hit
+    instr.style.visibility = "hidden";
+    startQuiz.style.visibility = "hidden";
+    //document.getElementById(startQuiz).disabled = 'true';
 
 });
 
 nextQuestion.addEventListener("click", function () {
-    //clear
-   
+    //document.getElementById("choice-list").reset();
+    //document.getElementById("question").reset()
+
     questions++;
     renderQuestions();
 

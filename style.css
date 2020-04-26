@@ -16,14 +16,29 @@ h1{
     float: none; 
     margin-bottom: 10px; 
 }
+.navBtn{
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px; 
+}
 /* css styling for the buttons created in js */
 button{ 
-    background-color: rgb(21, 150, 128); /* Green background */
-    border: 1px solid rgb(47, 83, 97); /* Green border */
+    background-color: rgb(21, 150, 128); 
+    border: 1px solid rgb(47, 83, 97); 
     color: white; /* White text */
     padding: 10px 24px; /* Some padding */
     cursor: pointer; /* Pointer/hand icon */
-    width: 100%; /* Set a width if needed */
+    width: 100%; 
     display: block; /* Make the buttons appear below each other */
     
+}
+#start{
+    background-color: rgb(22, 58, 19);
+    border: 1px solid  rgb(47, 83, 97);
+}
+#next-question{
+    border: 1px solid  rgb(47, 83, 97);
+}
+.quiz{
+    visibility: hidden; 
 }
