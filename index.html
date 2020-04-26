@@ -12,10 +12,9 @@
 </head>
 <!-- My logo heading -->
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img src="/Users/ninarocket/Desktop/CodingQuiz/ENrocket.PNG" widht="175px" height="75px" alt="">
-    </a>
-    <!-- <span class="navbar-brand mb-0 h1">enRocket</span> -->
+    <a class="navbar-brand">BestTest Inc.</a>
+    <span class="navbar-brand mb-0 h1">Coding Quiz</span>
+    <h6 class="timer">Timer: </h6>
 </nav>
 
 <body>
@@ -26,16 +25,21 @@
     <container>
 
         <div class="card" style="width: 18rem">
-            <div class="card-header">
+            <div id="question" class="card-header">
                 Featured
             </div>
-            <ul class="list-group list-group-flush">
-                <li id="a1" class="list-group-item">Cras justo odio</li>
-                <li id="a2" class="list-group-item">Dapibus ac facilisis in</li>
-                <li id="a3" class="list-group-item">Vestibulum at eros</li>
-                <li id="a4" class="list-group-item">Vestibulum at eros</li>
-            </ul>
+            <div class="choices">
+
+                <div id="choice-list">
+
+                </div>
+            </div>
+
+            <button type="button" id="start" class="btn btn-secondary">Start</button>
+            <button type="button" id="next-question" class="btn btn-secondary">Next Question</button>
         </div>
+
+
 
     </container>
 
