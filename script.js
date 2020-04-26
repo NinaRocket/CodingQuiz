@@ -6,7 +6,7 @@ var timeEl = document.querySelector(".timer");
 var quizCard = document.querySelector(".quiz");
 var instr = document.querySelector("h1");
 
-var secondsLeft = 300;
+var secondsLeft = 280;
 var timerInterval;
 function setTimer() {
     timerInterval = setInterval(updateTimer, 1000);
@@ -78,30 +78,35 @@ function renderQuestions() {
         var button = document.createElement("button"); //creating button
         button.textContent = choices; //adding text to the button 
         choiceList.appendChild(button); //putting the button into the html element 
+
     }
 
 }
-//questions++
+
 renderQuestions();
 
 startQuiz.addEventListener("click", function () {
-    //timer starts
 
+    //timer starts
     setTimer();
+
     //show quiz
     quizCard.style.visibility = "visible"; //makes quiz visible when start hit
-    instr.style.visibility = "hidden";
-    startQuiz.style.visibility = "hidden";
-    //document.getElementById(startQuiz).disabled = 'true';
+    instr.style.visibility = "hidden"; //hide press start text
+    startQuiz.style.visibility = "hidden"; //hide start button
 
 });
 
 nextQuestion.addEventListener("click", function () {
-    //document.getElementById("choice-list").reset();
-    //document.getElementById("question").reset()
 
+    // Clear choiceList items
+    choiceList.innerHTML = "";
+
+    //adds one to questions to point to next question set in array
     questions++;
+
     renderQuestions();
+
 
 });
 
