@@ -6,6 +6,8 @@ var timeEl = document.querySelector(".timer");
 var quizCard = document.querySelector(".quiz");
 var instr = document.querySelector("h1");
 
+var score = 0;
+var quiz = true;
 var secondsLeft = 280;
 var timerInterval;
 function setTimer() {
@@ -107,7 +109,23 @@ nextQuestion.addEventListener("click", function () {
 
     renderQuestions();
 
-
 });
 
+choiceList.addEventListener("click", function (e) {
+
+    //target choices buttons
+    if (e.target.matches("button")) {
+
+        if (questionArray.choice === questionArray.answer) {
+            console.log("correct");
+        }
+
+
+    }
+});
+
+// while(quiz){
+
+
+// }
 
