@@ -7,7 +7,6 @@ var quizCard = document.querySelector(".quiz");
 var instr = document.querySelector("h1");
 
 var score = 0;
-var quiz = true;
 var secondsLeft = 280;
 var timerInterval;
 function setTimer() {
@@ -115,8 +114,8 @@ choiceList.addEventListener("click", function (e) {
 
     //target choices buttons
     if (e.target.matches("button")) {
-
-        if (questionArray.choice === questionArray.answer) {
+        //if the button the user selects has a value that matches the answer value, it is correct
+        if (questionArray.choice.indexOf(questionArray.answer) === questionArray.answer.indexOf(questionArray.choice)) {
             console.log("correct");
         }
 
@@ -124,8 +123,5 @@ choiceList.addEventListener("click", function (e) {
     }
 });
 
-// while(quiz){
 
-
-// }
 
