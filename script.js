@@ -4,7 +4,7 @@ var nextQuestion = document.querySelector("#next-question");
 var startQuiz = document.querySelector("#start");
 var timeEl = document.querySelector(".timer");
 var quizCard = document.querySelector(".quiz");
-var instr = document.querySelector("h1");
+var instr = document.querySelector("h3");
 
 var score = 0;
 var secondsLeft = 280;
@@ -60,29 +60,50 @@ var questionArray = [
 
 
 ];
-// var questionOne = questionArray[0].question;
-// //var choiceOne = [questionArray[questions].choice];
-// var answerOne = questionArray[0].answer;
+
 
 //variable keeps count of what question we are on
 var questions = 0;
+
 
 function renderQuestions() {
 
     var questionText = document.getElementById("question");
     questionText.textContent = questionArray[questions].question;
-    console.log(questionText);
+
 
     for (var i = 0; i < questionArray[questions].choice.length; i++) {
-        console.log(i);
+
+
         var choices = questionArray[questions].choice[i];
         var button = document.createElement("button"); //creating button
         button.textContent = choices; //adding text to the button 
         choiceList.appendChild(button); //putting the button into the html element 
+        button.onclick = guessCheck();
+        function guessCheck() {
+            choiceList.addEventListener("click", function () {
 
-    }
 
-}
+                var answ = questionArray[questions].answer;
+                //var guess = button.textContent;
+                if (answ === guess) {
+                    console.log("yes");
+                }
+                console.log(guess);
+
+                console.log(answ);
+
+            });
+        }
+
+
+    };
+
+};
+
+
+
+
 
 renderQuestions();
 
@@ -109,19 +130,5 @@ nextQuestion.addEventListener("click", function () {
     renderQuestions();
 
 });
-
-choiceList.addEventListener("click", function (e) {
-
-    //target choices buttons
-    if (e.target.matches("button")) {
-        //if the button the user selects has a value that matches the answer value, it is correct
-        if (questionArray.choice.indexOf(questionArray.answer) === questionArray.answer.indexOf(questionArray.choice)) {
-            console.log("correct");
-        }
-
-
-    }
-});
-
 
 
