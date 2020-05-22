@@ -4,15 +4,20 @@ var nextQuestion = document.querySelector("#next-question");
 var startQuiz = document.querySelector("#start");
 var timeEl = document.querySelector(".timer");
 var quizCard = document.querySelector(".quiz");
-var instr = document.querySelector("h3");
+var instr = document.querySelector("h4");
 
+//variable to store score
 var score = 0;
+//variable for seconds on counter
 var secondsLeft = 280;
+//variable for the counter time interval
 var timerInterval;
+
+//function to set the timer, sets timerInterval to update every second
 function setTimer() {
     timerInterval = setInterval(updateTimer, 1000);
 }
-
+//function so the counter counts down
 function updateTimer() {
     secondsLeft--;
     timeEl.textContent = secondsLeft + "  seconds remaining";
@@ -65,43 +70,62 @@ var questionArray = [
 //variable keeps count of what question we are on
 var questions = 0;
 
-
+//function to render the questions to be displayed on the screen
 function renderQuestions() {
 
+    //variable to target the question ID div   
     var questionText = document.getElementById("question");
+    //setting the question text onto the question card
     questionText.textContent = questionArray[questions].question;
 
-
+    //a for loop to create and append the buttons to the div
     for (var i = 0; i < questionArray[questions].choice.length; i++) {
 
 
         var choices = questionArray[questions].choice[i];
-        var button = document.createElement("button"); //creating button
-        button.textContent = choices; //adding text to the button 
-        choiceList.appendChild(button); //putting the button into the html element 
-        button.onclick = guessCheck();
-        function guessCheck() {
-            choiceList.addEventListener("click", function () {
+        //creating button
+        var buttons = document.createElement("button");
+        $("buttons").addClass("answ-btn");
+        //adding text to the button 
+        buttons.textContent = choices;
+        //putting the button into the html element 
+        choiceList.appendChild(buttons);
+        $(".answ-btn").attr("disabled", true);
+        //when the answer is selected, the guessCheck function is called
+        buttons.onclick = guessCheck;
 
 
-                var answ = questionArray[questions].answer;
-                //var guess = button.textContent;
-                if (answ === guess) {
-                    console.log("yes");
-                }
-                console.log(guess);
-
-                console.log(answ);
-
-            });
-        }
 
 
     };
 
 };
 
+//function that checks to see if the answer selected is the correct one
+function guessCheck() {
 
+    //console.log(this);
+    //variable that stores the answer text displayed on the button
+    var textInside = this.innerHTML;
+    //variable that stores the answer to compare to what was selected
+    var answ = questionArray[questions].answer;
+
+    console.log(textInside);
+    //if else statement to check if the text on the button matches the answer text
+    if (textInside === answ) {
+        //if correct, increase score 
+        score++;
+
+        console.log(score);
+        console.log("yesssss");
+    }
+    else
+
+        //if incorrect, reduce 20 seconds off the clock
+        secondsLeft = secondsLeft - 20;
+
+
+}
 
 
 
@@ -113,9 +137,12 @@ startQuiz.addEventListener("click", function () {
     setTimer();
 
     //show quiz
-    quizCard.style.visibility = "visible"; //makes quiz visible when start hit
-    instr.style.visibility = "hidden"; //hide press start text
-    startQuiz.style.visibility = "hidden"; //hide start button
+    //makes quiz visible when start hit
+    quizCard.style.visibility = "visible";
+    //hide press start text
+    instr.style.visibility = "hidden";
+    //hide start button
+    startQuiz.style.visibility = "hidden";
 
 });
 

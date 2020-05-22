@@ -3,12 +3,13 @@
 }
 
 body{
-background-color: rgb(238, 236, 236);
+background-color: rgb(51, 48, 48);
 
 }
 
-h3{
+h4{
     text-align: center;
+    color: whitesmoke;
 }
 
 .card {
@@ -23,7 +24,7 @@ h3{
 }
 /* css styling for the buttons created in js */
 button{ 
-    background-color: rgb(21, 150, 128); 
+    background-color: rgb(106, 167, 156); 
     border: 1px solid rgb(47, 83, 97); 
     color: white; /* White text */
     padding: 10px 24px; /* Some padding */
@@ -33,7 +34,7 @@ button{
     
 }
 #start{
-    background-color: rgb(22, 58, 19);
+    background-color:  rgb(106, 167, 156); 
     border: 1px solid  rgb(47, 83, 97);
 }
 #next-question{
