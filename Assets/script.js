@@ -13,24 +13,13 @@ var score = 0;
 var secondsLeft = 180;
 //variable for the counter time interval
 var timerInterval;
+//variable for high score
+var highScore;
+//felt cute, might delete later
+var buttons;
+//variable keeps count of what question we are on
+var questions = 0;
 
-//function to set the timer, sets timerInterval to update every second
-function setTimer() {
-    timerInterval = setInterval(updateTimer, 1000);
-}
-//function so the counter counts down
-function updateTimer() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft + "  seconds remaining";
-
-    if (secondsLeft === 0) {
-        clearInterval(timerInterval);
-        endQuiz();
-        //setTimeout(sendMessage, 1000);
-    }
-}
-//gets saved high score from localstorage
-getHighScore();
 //array that holds Q/A arrays
 var questionArray = [
 
@@ -64,14 +53,23 @@ var questionArray = [
         choice: ["create an object called global variables", "on the index.html page", "inside a variable function", "at the top, outside of any functions or objects"],
         answer: "at the top, outside of any functions or objects"
     },
-
-
 ];
 
-var buttons;
+//function to set the timer, sets timerInterval to update every second
+function setTimer() {
+    timerInterval = setInterval(updateTimer, 1000);
+}
+//function so the counter counts down
+function updateTimer() {
+    secondsLeft--;
+    timeEl.textContent = secondsLeft + "  seconds remaining";
 
-//variable keeps count of what question we are on
-var questions = 0;
+    if (secondsLeft === 0) {
+        clearInterval(timerInterval);
+        endQuiz();
+        //setTimeout(sendMessage, 1000);
+    }
+};
 
 //function to render the questions to be displayed on the screen
 function renderQuestions() {
@@ -98,14 +96,19 @@ function renderQuestions() {
         //when the answer is selected, the guessCheck function is called
         buttons.onclick = guessCheck;
     };
-    console.log(questions);
 };
 
 //function that checks to see if the answer selected is the correct one
 function guessCheck() {
+    var answBtn = document.getElementsByClassName("answ-btn");
+    //console.log(buttons);
+    for (let i = 0; i < answBtn.length; i++) {
+        answBtn[i].disabled = true;
+    };
 
-    //disable other choices once a click is made
-    $(".answ-btn").prop('disabled', true);
+    //disable other choices once a click is made in jQuery - not used in this assignment but noted
+    // $(".answ-btn").prop('disabled', true);
+
     //variable that stores the answer text displayed on the button
     var textInside = this.innerHTML;
     //variable that stores the answer to compare to what was selected
@@ -116,8 +119,8 @@ function guessCheck() {
     if (textInside === answ) {
         //if correct, increase score 
         score++;
-        storeScore();
-        score.localStorage
+        //storeScore();
+        //score.localStorage
         console.log(score);
 
     }
@@ -128,15 +131,18 @@ function guessCheck() {
 
 //function to store score
 function storeScore() {
-
-    localStorage.setItem("question", score);
+    //if current score is higher than localStorage then store new score
+    if (score > highScore && highScore !== null) {
+        localStorage.setItem("question", score);
+        // getHighScore(highScore);
+    } else if (highScore === null) {
+        localStorage.setItem("question", score);
+    }
 };
 
 //function to get the high score out of local storage
-function getHighScore() {
-    var highScore = localStorage.getItem("question");
-    console.log(highScore);
-    //return highScore;
+function getHighScore(highScore) {
+    highScore = localStorage.getItem("question");
 
 };
 
@@ -162,35 +168,48 @@ nextQuestion.addEventListener("click", function () {
     choiceList.innerHTML = "";
     //adds one to questions to point to next question set in array
     questions++;
-    renderQuestions();
+
     //after last question, hide quiz and display score
     if (questions === 5) {
-        //questions = null;
+        //console.log(highScore);
         endQuiz();
 
-    };
+    } else
+        renderQuestions();
 });
-function endQuiz(highScore) {
-    //get high score
-    getHighScore(highScore);
-    if (score > highScore) {
-        localStorage.setItem("question", score);
+function endQuiz() {
+    highScore = localStorage.getItem("question");
+    if (highScore === null) {
+        highScore = localStorage.setItem("question", score);
+        highScore = localStorage.getItem("question");
     }
-    storeScore();
+    console.log(highScore);
     //end timer
     clearInterval(timerInterval);
     //hide next question button
     nextQuestion.style.visibility = "hidden";
     //hide quiz questions
     quizCard.style.visibility = "hidden";
+    //get high score
+    getHighScore(highScore);
+    // //if current score is higher than localStorage then store new score
+    // if (score > highScore) {
+    //     localStorage.setItem("question", score);
+    // }
     //variable to create p tag for text
     var showScore = document.createElement("p");
     //add a class to p tag for styling
     showScore.classList.add("finalScore");
     //text 
-    showScore.textContent = "Quiz Over!" + "\n" + "You scored: " + score
-        + "\n" + "High score is: " + highScore;
+    showScore.textContent = "Quiz Over! \n You scored: " + score
+        + " \n High score: " + highScore;
+    if (score > highScore) {
+        showScore.textContent = "Quiz Over! \n You scored: " + score
+            + " \n High score: " + highScore + "\n\n Congratulations, you have the new high score of: " +
+            score + "!!!";
+    }
     //append to the score display div in the HTML
     scoreDisp.append(showScore);
+    storeScore();
 };
 
