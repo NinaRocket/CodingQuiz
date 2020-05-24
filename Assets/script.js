@@ -119,10 +119,6 @@ function guessCheck() {
     if (textInside === answ) {
         //if correct, increase score 
         score++;
-        //storeScore();
-        //score.localStorage
-        console.log(score);
-
     }
     else
         //if incorrect, reduce 20 seconds off the clock
@@ -146,8 +142,8 @@ function getHighScore(highScore) {
 
 };
 
+//function for when start quiz button is clicked
 startQuiz.addEventListener("click", function () {
-
     //timer starts
     setTimer();
     //makes quiz visible when start hit
@@ -170,7 +166,7 @@ nextQuestion.addEventListener("click", function () {
     questions++;
 
     //after last question, hide quiz and display score
-    if (questions === 5) {
+    if (questions === 6) {
         //console.log(highScore);
         endQuiz();
 
@@ -178,8 +174,11 @@ nextQuestion.addEventListener("click", function () {
         renderQuestions();
 });
 function endQuiz() {
+    //get highScore value
     highScore = localStorage.getItem("question");
+    //if user first time, highScore will be null, execute the following
     if (highScore === null) {
+        //set and get high score into local storage
         highScore = localStorage.setItem("question", score);
         highScore = localStorage.getItem("question");
     }
@@ -192,22 +191,34 @@ function endQuiz() {
     quizCard.style.visibility = "hidden";
     //get high score
     getHighScore(highScore);
-    // //if current score is higher than localStorage then store new score
-    // if (score > highScore) {
-    //     localStorage.setItem("question", score);
-    // }
     //variable to create p tag for text
     var showScore = document.createElement("p");
     //add a class to p tag for styling
     showScore.classList.add("finalScore");
-    //text 
+    //text to display scores
     showScore.textContent = "Quiz Over! \n You scored: " + score
         + " \n High score: " + highScore;
+    //if the user score is higher than the saved high score, let them know
     if (score > highScore) {
+        getHighScore(highScore);
         showScore.textContent = "Quiz Over! \n You scored: " + score
             + " \n High score: " + highScore + "\n\n Congratulations, you have the new high score of: " +
-            score + "!!!";
-    }
+            score + "!!!" + "\n Enter your initials, champ!";
+        var inputBox = document.createElement("input");
+        showScore.appendChild(inputBox);
+        inputBox.setAttribute("id", "userInput");
+
+        // inputEnter();
+        function inputEnter(event) {
+            var initials = document.getElementById("userInput").value;
+            document.getElementById("userInput").innerHTML = initials;
+            if (event.key === "Enter") {
+                showScore.textContent = "Player: " + initials + " High Score: " + score;
+                storeScore();
+            }
+        };
+        inputBox.onkeyup = inputEnter;
+    };
     //append to the score display div in the HTML
     scoreDisp.append(showScore);
     storeScore();
