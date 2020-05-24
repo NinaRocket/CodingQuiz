@@ -59,3 +59,7 @@ button{
 #question{
     color: rgb(241, 160, 38);
 }
+.finalScore{
+    text-align: center; 
+    color: rgb(241, 160, 38);
+}

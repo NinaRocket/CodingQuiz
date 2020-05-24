@@ -5,11 +5,12 @@ var startQuiz = document.querySelector("#start");
 var timeEl = document.querySelector(".timer");
 var quizCard = document.querySelector(".quiz");
 var instr = document.querySelector("h4");
+var scoreDisp = document.querySelector(".scoreDisp");
 
 //variable to store score
 var score = 0;
 //variable for seconds on counter
-var secondsLeft = 280;
+var secondsLeft = 180;
 //variable for the counter time interval
 var timerInterval;
 
@@ -24,10 +25,11 @@ function updateTimer() {
 
     if (secondsLeft === 0) {
         clearInterval(timerInterval);
+        endQuiz();
         //setTimeout(sendMessage, 1000);
     }
 }
-
+//gets saved high score from localstorage
 getHighScore();
 //array that holds Q/A arrays
 var questionArray = [
@@ -82,7 +84,6 @@ function renderQuestions() {
     //a for loop to create and append the buttons to the div
     for (var i = 0; i < questionArray[questions].choice.length; i++) {
 
-
         var choices = questionArray[questions].choice[i];
         //creating button
         buttons = document.createElement("button");
@@ -97,6 +98,7 @@ function renderQuestions() {
         //when the answer is selected, the guessCheck function is called
         buttons.onclick = guessCheck;
     };
+    console.log(questions);
 };
 
 //function that checks to see if the answer selected is the correct one
@@ -120,28 +122,28 @@ function guessCheck() {
 
     }
     else
-
         //if incorrect, reduce 20 seconds off the clock
         secondsLeft = secondsLeft - 20;
+};
 
-
-}
+//function to store score
 function storeScore() {
+
     localStorage.setItem("question", score);
 };
 
+//function to get the high score out of local storage
 function getHighScore() {
     var highScore = localStorage.getItem("question");
     console.log(highScore);
-}
+    //return highScore;
 
+};
 
 startQuiz.addEventListener("click", function () {
 
     //timer starts
     setTimer();
-
-    //show quiz
     //makes quiz visible when start hit
     quizCard.style.visibility = "visible";
     //make visible next question button
@@ -158,12 +160,37 @@ nextQuestion.addEventListener("click", function () {
 
     // Clear choiceList items
     choiceList.innerHTML = "";
-
     //adds one to questions to point to next question set in array
     questions++;
-
     renderQuestions();
+    //after last question, hide quiz and display score
+    if (questions === 5) {
+        //questions = null;
+        endQuiz();
 
+    };
 });
-
+function endQuiz(highScore) {
+    //get high score
+    getHighScore(highScore);
+    if (score > highScore) {
+        localStorage.setItem("question", score);
+    }
+    storeScore();
+    //end timer
+    clearInterval(timerInterval);
+    //hide next question button
+    nextQuestion.style.visibility = "hidden";
+    //hide quiz questions
+    quizCard.style.visibility = "hidden";
+    //variable to create p tag for text
+    var showScore = document.createElement("p");
+    //add a class to p tag for styling
+    showScore.classList.add("finalScore");
+    //text 
+    showScore.textContent = "Quiz Over!" + "\n" + "You scored: " + score
+        + "\n" + "High score is: " + highScore;
+    //append to the score display div in the HTML
+    scoreDisp.append(showScore);
+};
 
