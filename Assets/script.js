@@ -28,7 +28,7 @@ function updateTimer() {
     }
 }
 
-
+getHighScore();
 //array that holds Q/A arrays
 var questionArray = [
 
@@ -66,6 +66,7 @@ var questionArray = [
 
 ];
 
+var buttons;
 
 //variable keeps count of what question we are on
 var questions = 0;
@@ -84,27 +85,25 @@ function renderQuestions() {
 
         var choices = questionArray[questions].choice[i];
         //creating button
-        var buttons = document.createElement("button");
-        $("buttons").addClass("answ-btn");
+        buttons = document.createElement("button");
+        //assigning class to dynamically created buttons
+        buttons.classList.add("answ-btn");
+
         //adding text to the button 
         buttons.textContent = choices;
         //putting the button into the html element 
         choiceList.appendChild(buttons);
-        $(".answ-btn").attr("disabled", true);
+
         //when the answer is selected, the guessCheck function is called
         buttons.onclick = guessCheck;
-
-
-
-
     };
-
 };
 
 //function that checks to see if the answer selected is the correct one
 function guessCheck() {
 
-    //console.log(this);
+    //disable other choices once a click is made
+    $(".answ-btn").prop('disabled', true);
     //variable that stores the answer text displayed on the button
     var textInside = this.innerHTML;
     //variable that stores the answer to compare to what was selected
@@ -115,9 +114,10 @@ function guessCheck() {
     if (textInside === answ) {
         //if correct, increase score 
         score++;
-
+        storeScore();
+        score.localStorage
         console.log(score);
-        console.log("yesssss");
+
     }
     else
 
@@ -126,10 +126,15 @@ function guessCheck() {
 
 
 }
+function storeScore() {
+    localStorage.setItem("question", score);
+};
 
+function getHighScore() {
+    var highScore = localStorage.getItem("question");
+    console.log(highScore);
+}
 
-
-renderQuestions();
 
 startQuiz.addEventListener("click", function () {
 
@@ -139,10 +144,13 @@ startQuiz.addEventListener("click", function () {
     //show quiz
     //makes quiz visible when start hit
     quizCard.style.visibility = "visible";
+    //make visible next question button
+    nextQuestion.style.visibility = "visible";
     //hide press start text
     instr.style.visibility = "hidden";
     //hide start button
     startQuiz.style.visibility = "hidden";
+    renderQuestions();
 
 });
 
