@@ -19,6 +19,10 @@ var highScore;
 var buttons;
 //variable keeps count of what question we are on
 var questions = 0;
+//variable for saved initial
+var nameInit;
+var initials;
+var showScore;
 
 //array that holds Q/A arrays
 var questionArray = [
@@ -173,15 +177,19 @@ nextQuestion.addEventListener("click", function () {
     } else
         renderQuestions();
 });
-function endQuiz() {
+function storeName() {
+
+    nameInit = localStorage.setItem("userInput", initials);
+}
+function getName() {
+
+    nameInit = localStorage.getItem("userInput");
+    console.log(nameInit);
+}
+function endQuiz(nameInit) {
     //get highScore value
     highScore = localStorage.getItem("question");
-    //if user first time, highScore will be null, execute the following
-    if (highScore === null) {
-        //set and get high score into local storage
-        highScore = localStorage.setItem("question", score);
-        highScore = localStorage.getItem("question");
-    }
+
     console.log(highScore);
     //end timer
     clearInterval(timerInterval);
@@ -192,35 +200,57 @@ function endQuiz() {
     //get high score
     getHighScore(highScore);
     //variable to create p tag for text
-    var showScore = document.createElement("p");
+    showScore = document.createElement("p");
     //add a class to p tag for styling
     showScore.classList.add("finalScore");
     //text to display scores
-    showScore.textContent = "Quiz Over! \n You scored: " + score
-        + " \n High score: " + highScore;
+    getName(nameInit);
+    console.log(highScore);
     //if the user score is higher than the saved high score, let them know
     if (score > highScore) {
-        getHighScore(highScore);
-        showScore.textContent = "Quiz Over! \n You scored: " + score
-            + " \n High score: " + highScore + "\n\n Congratulations, you have the new high score of: " +
-            score + "!!!" + "\n Enter your initials, champ!";
-        var inputBox = document.createElement("input");
-        showScore.appendChild(inputBox);
-        inputBox.setAttribute("id", "userInput");
 
-        // inputEnter();
-        function inputEnter(event) {
-            var initials = document.getElementById("userInput").value;
-            document.getElementById("userInput").innerHTML = initials;
-            if (event.key === "Enter") {
-                showScore.textContent = "Player: " + initials + " High Score: " + score;
-                storeScore();
-            }
-        };
+        console.log(highScore + "this is high score");
+        getHighScore(highScore);
+        getName(nameInit);
+
+        showScore.textContent = "Quiz Over! \n You scored: " + score
+            + " \n High score: " + highScore + " " + nameInit + "\n\n Congratulations, you have the new high score of: " +
+            score + "!!!" + "\n Enter your initials, champ!";
+
+        inputEnter();
+
         inputBox.onkeyup = inputEnter;
-    };
+        //if user first time, highScore will be null, execute the following
+    } else if (highScore === null) {
+        //set and get high score into local storage
+        highScore = localStorage.setItem("question", score);
+        highScore = localStorage.getItem("question");
+        showScore.textContent = "Quiz Over! \n You scored: " + score
+            + " \n High score: " + highScore + " " + nameInit + "\n\n Congratulations, you have the new high score of: " +
+            score + "!!!" + "\n Enter your initials, champ!";
+        inputEnter();
+    }
+    else {
+        console.log("this ran");
+        showScore.textContent = "Quiz Over! \n You scored: " + score
+            + " \n High score: " + highScore + " Player: " + nameInit;
+    }
+
     //append to the score display div in the HTML
     scoreDisp.append(showScore);
     storeScore();
-};
+}
+
+function inputEnter(event) {
+    var inputBox = document.createElement("input");
+    showScore.appendChild(inputBox);
+    inputBox.setAttribute("id", "userInput");
+    //document.getElementById("userInput").innerHTML = initials;
+    initials = document.getElementById("userInput").value;
+    if (event.key === "Enter") {
+        showScore.textContent = "Player: " + initials + " High Score: " + score;
+        storeScore();
+        storeName();
+    }
+}
 
