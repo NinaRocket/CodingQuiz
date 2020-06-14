@@ -105,7 +105,7 @@ function renderQuestions() {
 //function that checks to see if the answer selected is the correct one
 function guessCheck() {
     var answBtn = document.getElementsByClassName("answ-btn");
-    //console.log(buttons);
+
     for (let i = 0; i < answBtn.length; i++) {
         answBtn[i].disabled = true;
     };
@@ -118,7 +118,6 @@ function guessCheck() {
     //variable that stores the answer to compare to what was selected
     var answ = questionArray[questions].answer;
 
-    console.log(textInside);
     //if else statement to check if the text on the button matches the answer text
     if (textInside === answ) {
         //if correct, increase score 
@@ -141,8 +140,9 @@ function storeScore() {
 };
 
 //function to get the high score out of local storage
-function getHighScore(highScore) {
+function getHighScore() {
     highScore = localStorage.getItem("question");
+
 
 };
 
@@ -171,7 +171,7 @@ nextQuestion.addEventListener("click", function () {
 
     //after last question, hide quiz and display score
     if (questions === 6) {
-        //console.log(highScore);
+
         endQuiz();
 
     } else
@@ -184,13 +184,13 @@ function storeName() {
 function getName() {
 
     nameInit = localStorage.getItem("userInput");
-    console.log(nameInit);
+
+
 }
-function endQuiz(nameInit) {
+function endQuiz() {
+
     //get highScore value
     highScore = localStorage.getItem("question");
-
-    console.log(highScore);
     //end timer
     clearInterval(timerInterval);
     //hide next question button
@@ -203,54 +203,60 @@ function endQuiz(nameInit) {
     showScore = document.createElement("p");
     //add a class to p tag for styling
     showScore.classList.add("finalScore");
+    showScore.setAttribute("id", "myel");
     //text to display scores
     getName(nameInit);
-    console.log(highScore);
+    //magic that creates a new line in textContent
+    var newline = "\r\n";
     //if the user score is higher than the saved high score, let them know
-    if (score > highScore) {
+    if (score > highScore && highScore !== null) {
 
-        console.log(highScore + "this is high score");
-        getHighScore(highScore);
-        getName(nameInit);
+        getHighScore();
+        getName();
+        showScore.textContent = "Quiz Over!" + newline + "You scored: " + score
+            + "Previous High Score: " + highScore + " Player: " + nameInit + "\r\nCongratulations, you have the new high score of: " +
+            score + "!!!" + " \r\nEnter your initials, champ!";
+        var inputBox = document.createElement("input");
+        showScore.appendChild(inputBox);
+        inputBox.setAttribute("id", "userInput");
 
-        showScore.textContent = "Quiz Over! \n You scored: " + score
-            + " \n High score: " + highScore + " " + nameInit + "\n\n Congratulations, you have the new high score of: " +
-            score + "!!!" + "\n Enter your initials, champ!";
-
-        inputEnter();
 
         inputBox.onkeyup = inputEnter;
         //if user first time, highScore will be null, execute the following
-    } else if (highScore === null) {
+    } else if (highScore === null && nameInit === null) {
         //set and get high score into local storage
         highScore = localStorage.setItem("question", score);
         highScore = localStorage.getItem("question");
-        showScore.textContent = "Quiz Over! \n You scored: " + score
-            + " \n High score: " + highScore + " " + nameInit + "\n\n Congratulations, you have the new high score of: " +
-            score + "!!!" + "\n Enter your initials, champ!";
-        inputEnter();
+
+        showScore.textContent = "Quiz Over! " + newline + "You scored: " + score +
+            "\r\nCongratulations, you have the new high score of: " +
+            score + "!!!" + "\r\nEnter your initials, champ!";
+        var inputBox = document.createElement("input");
+        showScore.appendChild(inputBox);
+        inputBox.setAttribute("id", "userInput");
+
+        //when user hits enter it calls on inputEnter function to store data
+        inputBox.onkeyup = inputEnter;
+
     }
     else {
-        console.log("this ran");
-        showScore.textContent = "Quiz Over! \n You scored: " + score
-            + " \n High score: " + highScore + " Player: " + nameInit;
+
+        showScore.textContent = "Quiz Over!" + newline + "You scored: " + score
+            + " \r\n Current High Score: " + highScore + "  Player: " + nameInit;
     }
 
     //append to the score display div in the HTML
     scoreDisp.append(showScore);
     storeScore();
-}
+};
 
-function inputEnter(event) {
-    var inputBox = document.createElement("input");
-    showScore.appendChild(inputBox);
-    inputBox.setAttribute("id", "userInput");
-    //document.getElementById("userInput").innerHTML = initials;
+function inputEnter() {
+
     initials = document.getElementById("userInput").value;
     if (event.key === "Enter") {
         showScore.textContent = "Player: " + initials + " High Score: " + score;
         storeScore();
         storeName();
     }
-}
+};
 

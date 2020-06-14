@@ -63,3 +63,7 @@ button{
     text-align: center; 
     color: rgb(241, 160, 38);
 }
+/* magic that creates a new line in textContent */
+#myel {
+    white-space: pre;
+  }
