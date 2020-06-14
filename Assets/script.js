@@ -212,8 +212,8 @@ function endQuiz() {
         getHighScore();
         getName();
         showScore.textContent = "Quiz Over!" + newline + "You scored: " + score
-            + newline + "Previous High Score: " + highScore + " Player: " + nameInit + newline + "Congratulations, you have the new high score of: " +
-            score + "!!!" + newline + "Enter your initials, champ!";
+            + " " + newline + " Previous High Score: " + highScore + " Player: " + nameInit + newline + "Congratulations, you have the new high score of: " +
+            score + "!!!" + newline + "Enter your initials, champ!  ";
         var inputBox = document.createElement("input");
         showScore.appendChild(inputBox);
         inputBox.setAttribute("id", "userInput");
@@ -228,7 +228,7 @@ function endQuiz() {
 
         showScore.textContent = "Quiz Over! " + newline + "You scored: " + score +
             newline + "Congratulations, you have the new high score of: " +
-            score + "!!!" + newline + "Enter your initials, champ!";
+            score + "!!!" + newline + "Enter your initials, champ!  ";
         var inputBox = document.createElement("input");
         showScore.appendChild(inputBox);
         inputBox.setAttribute("id", "userInput");
