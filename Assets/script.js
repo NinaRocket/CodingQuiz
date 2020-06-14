@@ -62,7 +62,7 @@ var questionArray = [
 //function to set the timer, sets timerInterval to update every second
 function setTimer() {
     timerInterval = setInterval(updateTimer, 1000);
-}
+};
 //function so the counter counts down
 function updateTimer() {
     secondsLeft--;
@@ -71,7 +71,6 @@ function updateTimer() {
     if (secondsLeft === 0) {
         clearInterval(timerInterval);
         endQuiz();
-        //setTimeout(sendMessage, 1000);
     }
 };
 
@@ -143,7 +142,6 @@ function storeScore() {
 function getHighScore() {
     highScore = localStorage.getItem("question");
 
-
 };
 
 //function for when start quiz button is clicked
@@ -214,8 +212,8 @@ function endQuiz() {
         getHighScore();
         getName();
         showScore.textContent = "Quiz Over!" + newline + "You scored: " + score
-            + "Previous High Score: " + highScore + " Player: " + nameInit + "\r\nCongratulations, you have the new high score of: " +
-            score + "!!!" + " \r\nEnter your initials, champ!";
+            + newline + "Previous High Score: " + highScore + " Player: " + nameInit + newline + "Congratulations, you have the new high score of: " +
+            score + "!!!" + newline + "Enter your initials, champ!";
         var inputBox = document.createElement("input");
         showScore.appendChild(inputBox);
         inputBox.setAttribute("id", "userInput");
@@ -229,8 +227,8 @@ function endQuiz() {
         highScore = localStorage.getItem("question");
 
         showScore.textContent = "Quiz Over! " + newline + "You scored: " + score +
-            "\r\nCongratulations, you have the new high score of: " +
-            score + "!!!" + "\r\nEnter your initials, champ!";
+            newline + "Congratulations, you have the new high score of: " +
+            score + "!!!" + newline + "Enter your initials, champ!";
         var inputBox = document.createElement("input");
         showScore.appendChild(inputBox);
         inputBox.setAttribute("id", "userInput");
@@ -242,7 +240,7 @@ function endQuiz() {
     else {
 
         showScore.textContent = "Quiz Over!" + newline + "You scored: " + score
-            + " \r\n Current High Score: " + highScore + "  Player: " + nameInit;
+            + newline + " Current High Score: " + highScore + "  Player: " + nameInit;
     }
 
     //append to the score display div in the HTML
