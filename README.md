@@ -24,4 +24,15 @@ The next user will hit the home page "BestTest Inc" on the top left corner to pl
 
 ![](/Assets/nothighsorry.png)
 
-They try again. 
+They try again and get the new high score!
+
+![](/Assets/newhighscore.png)
+
+![](/Assets/savedlocal.png)
+
+A gif showing a run through of the quiz is below:
+
+![](/Assets/Coding%20Quiz.gif)
+
+Languages used: vanilla javascript, HTML, CSS 
+GitHub repo: [CodingQuiz](https://github.com/NinaRocket/CodingQuiz)
